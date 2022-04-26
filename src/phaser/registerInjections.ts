@@ -13,7 +13,7 @@ export function registerInjections() {
 		MainScene,
 		Tokens.AssetsData,
 		Tokens.ECSWorld,
-		Tokens.CorePipe,
+		Tokens.GameUpdateCreator,
 		PhaserPipeline,
 		StartGame
 	)
@@ -23,6 +23,8 @@ export function registerInjections() {
 		startGame,
 		Tokens.CreateBricks,
 		Tokens.CreatePaddle,
-		Tokens.CreateBall
+		Tokens.CreateBall,
+		Tokens.CreateWalls,
+		Tokens.CreateLauncher
 	)
 }

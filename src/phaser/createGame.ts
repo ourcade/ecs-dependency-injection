@@ -10,7 +10,7 @@ export function createGame(config: IGameConfig) {
 			height: config.world.height,
 			physics: {},
 			scale: {
-				mode: Phaser.Scale.ScaleModes.FIT,
+				mode: Phaser.Scale.ScaleModes.NONE,
 				expandParent: false,
 				autoRound: true,
 			},

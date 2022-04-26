@@ -1,9 +1,23 @@
 import { injected } from 'brandi'
-import { createBall, createBricks, createPaddle } from './game'
+import {
+	createBall,
+	createBricks,
+	createLauncher,
+	createPaddle,
+	createWalls,
+	gameUpdateCreator,
+} from './game'
 
 import * as Tokens from './tokens'
 
 export function registerInjections() {
+	injected(
+		gameUpdateCreator,
+		Tokens.GameConfig,
+		Tokens.GlobalState,
+		Tokens.Keyboard,
+		Tokens.PhysicsEngine
+	)
 	injected(
 		createBricks,
 		Tokens.GameConfig,
@@ -14,12 +28,16 @@ export function registerInjections() {
 		createPaddle,
 		Tokens.GameConfig,
 		Tokens.ECSWorld,
-		Tokens.TextureKeyToIndex
+		Tokens.TextureKeyToIndex,
+		Tokens.GlobalState
 	)
 	injected(
 		createBall,
 		Tokens.GameConfig,
 		Tokens.ECSWorld,
-		Tokens.TextureKeyToIndex
+		Tokens.TextureKeyToIndex,
+		Tokens.GlobalState
 	)
+	injected(createWalls, Tokens.GameConfig, Tokens.ECSWorld)
+	injected(createLauncher, Tokens.ECSWorld, Tokens.GlobalState)
 }

@@ -2,7 +2,7 @@ import { createContainer } from 'brandi'
 
 import * as Token from './tokens'
 import {
-	createCorePipeline,
+	gameUpdateCreator,
 	createECSWorld,
 	indexToTexture,
 	createBricks,
@@ -10,9 +10,13 @@ import {
 	textureToIndex,
 	createPaddle,
 	createBall,
+	createWalls,
+	createLauncher,
+	createPhysicsEngine,
 } from './game'
 
 import { registerInjections } from './injections'
+import { KeyboardService, GlobalState } from './game/services'
 
 export const container = createContainer()
 
@@ -26,20 +30,20 @@ container.bind(Token.Root).toConstant(container)
 
 container.bind(Token.GameConfig).toConstant({
 	world: {
-		width: 1920,
-		height: 1080,
+		width: 960,
+		height: 540,
 	},
 	brick: {
-		width: 128,
-		height: 64,
+		width: 64,
+		height: 32,
 	},
 	ball: {
-		width: 48,
-		height: 48,
+		width: 24,
+		height: 24,
 	},
 	paddle: {
-		width: 200,
-		height: 48,
+		width: 100,
+		height: 24,
 	},
 })
 
@@ -61,9 +65,27 @@ container.bind(Token.AssetsData).toConstant({
 container.bind(Token.IndexToTextureKey).toConstant(indexToTexture)
 container.bind(Token.TextureKeyToIndex).toConstant(textureToIndex)
 
+// input
+container.bind(Token.Keyboard).toInstance(KeyboardService).inSingletonScope()
+
 // game
+container.bind(Token.GlobalState).toInstance(GlobalState).inContainerScope()
 container.bind(Token.ECSWorld).toInstance(createECSWorld).inContainerScope()
-container.bind(Token.CorePipe).toInstance(createCorePipeline).inTransientScope()
+container
+	.bind(Token.GameUpdateCreator)
+	.toInstance(gameUpdateCreator)
+	.inTransientScope()
 container.bind(Token.CreateBricks).toInstance(createBricks).inTransientScope()
 container.bind(Token.CreatePaddle).toInstance(createPaddle).inTransientScope()
 container.bind(Token.CreateBall).toInstance(createBall).inTransientScope()
+container.bind(Token.CreateWalls).toInstance(createWalls).inTransientScope()
+container
+	.bind(Token.CreateLauncher)
+	.toInstance(createLauncher)
+	.inTransientScope()
+
+// physics
+container
+	.bind(Token.PhysicsEngine)
+	.toInstance(createPhysicsEngine)
+	.inContainerScope()

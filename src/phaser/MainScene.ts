@@ -1,19 +1,24 @@
 import Phaser from 'phaser'
 
-import type { ECSPipeline, IAssetsData, IECSWorld } from '../types'
+import type {
+	ECSPipeline,
+	GameUpdateFunc,
+	IAssetsData,
+	IECSWorld,
+} from '../types'
 import type { PipelineCreator, StartGameFunc } from './types'
 
 export class MainScene extends Phaser.Scene {
 	private readonly assetsData: IAssetsData
 	private readonly world: IECSWorld
-	private readonly corePipeline: ECSPipeline
+	private readonly gameUpdate: GameUpdateFunc
 	private readonly pipeline: ECSPipeline
 	private readonly start: StartGameFunc
 
 	constructor(
 		assetsData: IAssetsData,
 		world: IECSWorld,
-		corePipeline: ECSPipeline,
+		gameUpdate: GameUpdateFunc,
 		createPipeline: PipelineCreator,
 		startGame: StartGameFunc
 	) {
@@ -21,7 +26,7 @@ export class MainScene extends Phaser.Scene {
 
 		this.assetsData = assetsData
 		this.world = world
-		this.corePipeline = corePipeline
+		this.gameUpdate = gameUpdate
 		this.pipeline = createPipeline(this)
 		this.start = startGame
 	}
@@ -40,7 +45,7 @@ export class MainScene extends Phaser.Scene {
 
 	update(_t: number, dt: number) {
 		this.world.dt = dt
-		this.corePipeline(this.world)
+		this.gameUpdate(this.world)
 		this.pipeline(this.world)
 	}
 }
