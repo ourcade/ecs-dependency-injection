@@ -10,17 +10,13 @@ import Matter from 'matter-js'
 
 import { IECSWorld } from '../../types'
 import {
-	ActiveState,
 	Bouncy,
 	BoxCollider,
 	Brick,
 	ChangeVelocity,
 	CircleCollider,
-	Direction,
 	FixedRotation,
-	Follow,
 	Friction,
-	MovementInput,
 	PhysicsBody,
 	Position,
 	RemoveAll,
@@ -303,62 +299,6 @@ export function handleCollisions(engine: Matter.Engine) {
 			} else if (hasComponent(world, Brick, eidb)) {
 				addComponent(world, RemoveAll, eidb)
 			}
-		}
-		return world
-	}
-}
-
-function isDirectionActive(mask: number, bit: Direction) {
-	return (mask & bit) === bit
-}
-
-export function movement() {
-	const query = defineQuery([PhysicsBody, MovementInput])
-	const speed = 12
-	return (world: IECSWorld) => {
-		const entities = query(world)
-		for (const eid of entities) {
-			const body = bodies[eid]
-			if (!body) {
-				continue
-			}
-
-			const mask = MovementInput.directions[eid]
-			const { x, y } = body.position
-			if (isDirectionActive(mask, Direction.Left)) {
-				setBodyPosition(body, x - speed, y)
-			} else if (isDirectionActive(mask, Direction.Right)) {
-				setBodyPosition(body, x + speed, y)
-			}
-		}
-		return world
-	}
-}
-
-export function follow() {
-	const query = defineQuery([PhysicsBody, Follow])
-	return (world: IECSWorld) => {
-		const entities = query(world)
-		for (const eid of entities) {
-			if (Follow.state[eid] === ActiveState.Disabled) {
-				continue
-			}
-
-			const body = bodies[eid]
-			if (!body) {
-				continue
-			}
-
-			const bodyToFollow = bodies[Follow.entityId[eid]]
-			if (!bodyToFollow) {
-				continue
-			}
-
-			setBodyPosition(
-				body,
-				bodyToFollow.position.x + Follow.offsetX[eid],
-				bodyToFollow.position.y + Follow.offsetY[eid]
-			)
 		}
 		return world
 	}

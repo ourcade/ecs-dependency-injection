@@ -22,6 +22,7 @@ import {
 	MovementInput,
 	Position,
 	RemoveAll,
+	PhysicsBody,
 } from '../components'
 
 import {
@@ -39,8 +40,6 @@ import {
 	setBodyPosition,
 	fixedRotation,
 	handleCollisions,
-	movement,
-	follow,
 } from './physics'
 
 export function keyboardInput(keyboard: IKeyboardService) {
@@ -141,6 +140,62 @@ export function removeAll() {
 			}
 			removeEntity(world, eid)
 		}
+	}
+}
+
+function isDirectionActive(mask: number, bit: Direction) {
+	return (mask & bit) === bit
+}
+
+export function movement() {
+	const query = defineQuery([PhysicsBody, MovementInput])
+	const speed = 12
+	return (world: IECSWorld) => {
+		const entities = query(world)
+		for (const eid of entities) {
+			const body = getPhysicsBody(eid)
+			if (!body) {
+				continue
+			}
+
+			const mask = MovementInput.directions[eid]
+			const { x, y } = body.position
+			if (isDirectionActive(mask, Direction.Left)) {
+				setBodyPosition(body, x - speed, y)
+			} else if (isDirectionActive(mask, Direction.Right)) {
+				setBodyPosition(body, x + speed, y)
+			}
+		}
+		return world
+	}
+}
+
+export function follow() {
+	const query = defineQuery([PhysicsBody, Follow])
+	return (world: IECSWorld) => {
+		const entities = query(world)
+		for (const eid of entities) {
+			if (Follow.state[eid] === ActiveState.Disabled) {
+				continue
+			}
+
+			const body = getPhysicsBody(eid)
+			if (!body) {
+				continue
+			}
+
+			const bodyToFollow = getPhysicsBody(Follow.entityId[eid])
+			if (!bodyToFollow) {
+				continue
+			}
+
+			setBodyPosition(
+				body,
+				bodyToFollow.position.x + Follow.offsetX[eid],
+				bodyToFollow.position.y + Follow.offsetY[eid]
+			)
+		}
+		return world
 	}
 }
 
