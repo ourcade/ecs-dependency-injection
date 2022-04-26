@@ -9,6 +9,7 @@ import type {
 	createWalls,
 	gameUpdateCreator,
 	createLauncher,
+	startGame,
 } from '../game'
 
 export interface ISize {
@@ -38,6 +39,10 @@ export interface IAssetsData {
 	ball: AssetDefinition
 	paddle: AssetDefinition
 	brick: AssetDefinition
+	logo: {
+		phaser: Omit<AssetDefinition, 'key'>
+		pixi: Omit<AssetDefinition, 'key'>
+	}
 }
 
 export type IndexToTextureFunc = typeof indexToTexture
@@ -48,6 +53,7 @@ export type CreatePaddleFunc = ReturnType<typeof createPaddle>
 export type CreateBallFunc = ReturnType<typeof createBall>
 export type CreateWallsFunc = ReturnType<typeof createWalls>
 export type CreateLauncherFunc = ReturnType<typeof createLauncher>
+export type StartGameFunc = ReturnType<typeof startGame>
 
 export interface IKeyboardService {
 	readonly left: boolean

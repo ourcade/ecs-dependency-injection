@@ -5,8 +5,9 @@ import type {
 	GameUpdateFunc,
 	IAssetsData,
 	IECSWorld,
+	StartGameFunc,
 } from '../types'
-import type { PipelineCreator, StartGameFunc } from './types'
+import type { PipelineCreator } from './types'
 
 export class MainScene extends Phaser.Scene {
 	private readonly assetsData: IAssetsData
@@ -32,14 +33,18 @@ export class MainScene extends Phaser.Scene {
 	}
 
 	preload() {
-		const { ball, paddle, brick } = this.assetsData
+		const { ball, paddle, brick, logo } = this.assetsData
 
 		this.load.image(ball.key, ball.path)
 		this.load.image(paddle.key, paddle.path)
 		this.load.image(brick.key, brick.path)
+
+		this.load.image('logo', logo.phaser.path)
 	}
 
 	create() {
+		const { width, height } = this.scale
+		this.add.image(width, height, 'logo').setOrigin(1, 1).setAlpha(0.3)
 		this.start()
 	}
 

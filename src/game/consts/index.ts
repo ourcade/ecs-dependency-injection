@@ -1,7 +1,7 @@
 export const TexturesToIndices = {
-	Brick: 0,
-	Paddle: 1,
-	Ball: 2,
+	brick: 0,
+	paddle: 1,
+	ball: 2,
 }
 
 export type TextureKey = keyof typeof TexturesToIndices

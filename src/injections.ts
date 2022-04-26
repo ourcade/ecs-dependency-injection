@@ -6,6 +6,7 @@ import {
 	createPaddle,
 	createWalls,
 	gameUpdateCreator,
+	startGame,
 } from './game'
 
 import * as Tokens from './tokens'
@@ -22,7 +23,8 @@ export function registerInjections() {
 		createBricks,
 		Tokens.GameConfig,
 		Tokens.ECSWorld,
-		Tokens.TextureKeyToIndex
+		Tokens.TextureKeyToIndex,
+		Tokens.BricksLayout
 	)
 	injected(
 		createPaddle,
@@ -40,4 +42,12 @@ export function registerInjections() {
 	)
 	injected(createWalls, Tokens.GameConfig, Tokens.ECSWorld)
 	injected(createLauncher, Tokens.ECSWorld, Tokens.GlobalState)
+	injected(
+		startGame,
+		Tokens.CreateBricks,
+		Tokens.CreatePaddle,
+		Tokens.CreateBall,
+		Tokens.CreateWalls,
+		Tokens.CreateLauncher
+	)
 }

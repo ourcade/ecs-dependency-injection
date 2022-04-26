@@ -6,6 +6,11 @@ import type {
 	IGameConfig,
 	IGlobalState,
 	TextureToIndexFunc,
+	CreateBallFunc,
+	CreateBricksFunc,
+	CreateLauncherFunc,
+	CreatePaddleFunc,
+	CreateWallsFunc,
 } from '../types'
 import {
 	Ball,
@@ -43,17 +48,9 @@ export function createPhysicsEngine() {
 export function createBricks(
 	config: IGameConfig,
 	world: IECSWorld,
-	textureToIndex: TextureToIndexFunc
+	textureToIndex: TextureToIndexFunc,
+	layout: number[][]
 ) {
-	// 0 - nothing, 1 - red, 2 - green, 3 - blue, 4 - purple, 5 - yellow, 6 - white
-	const layout = [
-		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-		[0, 0, 0, 1, 1, 1, 1, 6, 3, 3, 3, 3],
-		[0, 0, 0, 2, 2, 2, 1, 6, 3, 5, 5, 5],
-		[0, 0, 0, 3, 3, 3, 1, 6, 3, 4, 4, 4],
-		[0, 0, 0, 1, 1, 1, 1, 6, 3, 3, 3, 3],
-	]
 	const brickWidth = config.brick.width
 	const halfBrickWidth = brickWidth * 0.5
 
@@ -80,7 +77,7 @@ export function createBricks(
 				addComponent(world, Bouncy, eid)
 
 				addComponent(world, Sprite, eid)
-				Sprite.texture[eid] = textureToIndex(Texture.Brick)
+				Sprite.texture[eid] = textureToIndex(Texture.brick)
 
 				addComponent(world, Tint, eid)
 				switch (space) {
@@ -123,7 +120,7 @@ export function createPaddle(
 	return () => {
 		const eid = addEntity(world)
 		addComponent(world, Sprite, eid)
-		Sprite.texture[eid] = textureToIndex(Texture.Paddle)
+		Sprite.texture[eid] = textureToIndex(Texture.paddle)
 
 		addComponent(world, PhysicsBody, eid)
 		addComponent(world, BoxCollider, eid)
@@ -161,7 +158,7 @@ export function createBall(
 			config.paddle.height * 0.5 -
 			config.ball.height * 0.5
 		addComponent(world, Sprite, eid)
-		Sprite.texture[eid] = textureToIndex(Texture.Ball)
+		Sprite.texture[eid] = textureToIndex(Texture.ball)
 
 		addComponent(world, Position, eid)
 		Position.x[eid] = Ball.startX[eid]
@@ -236,5 +233,21 @@ export function createLauncher(world: IECSWorld, globalState: IGlobalState) {
 		addComponent(world, Launcher, eid)
 
 		globalState.setLauncherEntityId(eid)
+	}
+}
+
+export function startGame(
+	createBricks: CreateBricksFunc,
+	createPaddle: CreatePaddleFunc,
+	createBall: CreateBallFunc,
+	createWalls: CreateWallsFunc,
+	createLauncher: CreateLauncherFunc
+) {
+	return () => {
+		createBricks()
+		createPaddle()
+		createBall()
+		createWalls()
+		createLauncher()
 	}
 }

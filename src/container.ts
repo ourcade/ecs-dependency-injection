@@ -13,6 +13,7 @@ import {
 	createWalls,
 	createLauncher,
 	createPhysicsEngine,
+	startGame,
 } from './game'
 
 import { registerInjections } from './injections'
@@ -50,16 +51,24 @@ container.bind(Token.GameConfig).toConstant({
 // assets
 container.bind(Token.AssetsData).toConstant({
 	ball: {
-		key: Texture.Ball,
+		key: Texture.ball,
 		path: 'assets/ball.png',
 	},
 	paddle: {
-		key: Texture.Paddle,
+		key: Texture.paddle,
 		path: 'assets/paddle.png',
 	},
 	brick: {
-		key: Texture.Brick,
+		key: Texture.brick,
 		path: 'assets/brick.png',
+	},
+	logo: {
+		phaser: {
+			path: 'assets/logos/phaser.png',
+		},
+		pixi: {
+			path: 'assets/logos/pixi.png',
+		},
 	},
 })
 container.bind(Token.IndexToTextureKey).toConstant(indexToTexture)
@@ -69,10 +78,20 @@ container.bind(Token.TextureKeyToIndex).toConstant(textureToIndex)
 container.bind(Token.Keyboard).toInstance(KeyboardService).inSingletonScope()
 
 // game
+// 0 - nothing, 1 - red, 2 - green, 3 - blue, 4 - purple, 5 - yellow, 6 - white
+const layout = [
+	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+	[0, 0, 0, 1, 1, 1, 1, 6, 3, 3, 3, 3, 0, 0, 0],
+	[0, 0, 0, 2, 2, 2, 1, 6, 3, 5, 5, 5, 0, 0, 0],
+	[0, 0, 0, 3, 3, 3, 1, 6, 3, 4, 4, 4, 0, 0, 0],
+	[0, 0, 0, 1, 1, 1, 1, 6, 3, 3, 3, 3, 0, 0, 0],
+]
+container.bind(Token.BricksLayout).toConstant(layout)
 container.bind(Token.GlobalState).toInstance(GlobalState).inContainerScope()
 container.bind(Token.ECSWorld).toInstance(createECSWorld).inContainerScope()
 container
-	.bind(Token.GameUpdateCreator)
+	.bind(Token.GameUpdate)
 	.toInstance(gameUpdateCreator)
 	.inTransientScope()
 container.bind(Token.CreateBricks).toInstance(createBricks).inTransientScope()
@@ -83,6 +102,7 @@ container
 	.bind(Token.CreateLauncher)
 	.toInstance(createLauncher)
 	.inTransientScope()
+container.bind(Token.StartGame).toInstance(startGame).inTransientScope()
 
 // physics
 container

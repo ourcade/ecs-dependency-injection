@@ -213,6 +213,7 @@ export function gameUpdateCreator(
 		friction(),
 		bouncy(),
 		fixedRotation(),
+
 		keyboardInput(keyboard),
 		launcher(config, keyboard, globalState),
 		changeVelocity(),

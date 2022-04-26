@@ -1,17 +1,28 @@
 import { createChildContainer } from '../container'
+import { GameConfig } from '../tokens'
 
-import { registerBindings } from './registerBindings'
-import { registerInjections } from './registerInjections'
+import { registerBindings, registerInjections } from './register'
 
-import { MainScene, CreateGame } from './tokens'
+import { MainScene } from './tokens'
 
 const container = createChildContainer()
 
 registerInjections()
 registerBindings(container)
 
-const createGame = container.get(CreateGame)
-const game = createGame('app')
+const config = container.get(GameConfig)
+const game = new Phaser.Game({
+	type: Phaser.AUTO,
+	parent: 'app',
+	width: config.world.width,
+	height: config.world.height,
+	physics: {},
+	scale: {
+		mode: Phaser.Scale.ScaleModes.NONE,
+		expandParent: false,
+		autoRound: true,
+	},
+})
 
 game.scene.add(MainScene.__d, function () {
 	return container.get(MainScene)
