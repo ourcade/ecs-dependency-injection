@@ -42,6 +42,8 @@ export interface IAssetsData {
 	logo: {
 		phaser: Omit<AssetDefinition, 'key'>
 		pixi: Omit<AssetDefinition, 'key'>
+		react: Omit<AssetDefinition, 'key'>
+		three: Omit<AssetDefinition, 'key'>
 	}
 }
 

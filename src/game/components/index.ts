@@ -41,6 +41,7 @@ export const Ball = defineComponent({
 })
 
 export const Brick = defineComponent()
+export const Paddle = defineComponent()
 
 export const RemoveAll = defineComponent()
 

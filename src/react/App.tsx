@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from 'react'
-import { GameConfig } from '../tokens'
+import { AssetsData, GameConfig } from '../tokens'
 import { ContainerContext } from './container'
 import { observer } from 'mobx-react-lite'
 import { ECSWorld, GameUpdate, StartGame } from '../tokens'
@@ -10,6 +10,7 @@ import { Sprite } from './Sprite'
 export const App = observer(function () {
 	const container = useContext(ContainerContext)
 	const [config] = useState(container.get(GameConfig))
+	const [assetsData] = useState(container.get(AssetsData))
 
 	useEffect(() => {
 		const startGame = container.get(StartGame)
@@ -28,7 +29,7 @@ export const App = observer(function () {
 		}
 
 		startGame()
-		requestAnimationFrame(loop)
+		loop(start)
 	}, [])
 
 	return (
@@ -45,7 +46,7 @@ export const App = observer(function () {
 				x={config.world.width - 168}
 				y={config.world.height - 300}
 				opacity={0.3}
-				path="assets/logos/react.png"
+				path={assetsData.logo.react.path}
 				eid={-1}
 			/>
 			{stateStore.spriteComponentsList.map((props) => (

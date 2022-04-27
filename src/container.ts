@@ -69,6 +69,12 @@ container.bind(Token.AssetsData).toConstant({
 		pixi: {
 			path: 'assets/logos/pixi.png',
 		},
+		react: {
+			path: 'assets/logos/react.png',
+		},
+		three: {
+			path: 'assets/logos/three.png',
+		},
 	},
 })
 container.bind(Token.IndexToTextureKey).toConstant(indexToTexture)

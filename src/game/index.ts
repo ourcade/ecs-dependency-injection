@@ -23,6 +23,7 @@ import {
 	Friction,
 	Launcher,
 	MovementInput,
+	Paddle,
 	PhysicsBody,
 	Position,
 	Sprite,
@@ -119,6 +120,7 @@ export function createPaddle(
 ) {
 	return () => {
 		const eid = addEntity(world)
+		addComponent(world, Paddle, eid)
 		addComponent(world, Sprite, eid)
 		Sprite.texture[eid] = textureToIndex(Texture.paddle)
 
