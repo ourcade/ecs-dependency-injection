@@ -9,6 +9,9 @@
   },
   "devDependencies": {
     "@types/matter-js": "^0.17.7",
+    "@types/react": "^18.0.8",
+    "@types/react-dom": "^18.0.0",
+    "@vitejs/plugin-react": "^1.3.1",
     "typescript": "^4.5.4",
     "vite": "^2.9.5"
   },
@@ -16,7 +19,11 @@
     "bitecs": "^0.3.38",
     "brandi": "^4.0.1",
     "matter-js": "^0.18.0",
+    "mobx": "^6.5.0",
+    "mobx-react-lite": "^3.3.0",
     "phaser": "^3.55.2",
-    "pixi.js": "^6.3.0"
+    "pixi.js": "^6.3.0",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0"
   }
 }
