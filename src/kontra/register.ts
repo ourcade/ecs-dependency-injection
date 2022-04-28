@@ -46,7 +46,7 @@ export function registerInjections() {
 	injected(createLoadAssets, Token.AssetsData)
 	injected(createLoop, Game, UpdateLoop, RenderLoop)
 	injected(createUpdateLoop, Token.ECSWorld, Token.GameUpdate, UpdatePipeline)
-	injected(createRenderLoop, Token.ECSWorld, RenderPipeline)
+	injected(createRenderLoop, Token.ECSWorld, RenderPipeline, Token.GameConfig)
 	injected(updatePipeline, Token.AssetsData, Token.IndexToTextureKey)
 	injected(renderPipeline, Game)
 }

@@ -1,4 +1,4 @@
-import { init, GameLoop, load, imageAssets } from 'kontra'
+import { init, GameLoop, load, imageAssets, Text } from 'kontra'
 import {
 	ECSPipeline,
 	GameUpdateFunc,
@@ -39,9 +39,22 @@ export function createUpdateLoop(
 
 export function createRenderLoop(
 	world: IECSWorld,
-	renderPipeline: ECSPipeline
+	renderPipeline: ECSPipeline,
+	config: IGameConfig
 ) {
+	let text = Text({
+		text: 'Kontra',
+		font: '100px Roboto Black',
+		color: 'white',
+		opacity: 0.3,
+		x: config.world.width - 20,
+		y: config.world.height,
+		anchor: { x: 1, y: 1 },
+		textAlign: 'right',
+	})
+
 	return () => {
+		text.render()
 		renderPipeline(world)
 	}
 }
