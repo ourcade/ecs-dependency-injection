@@ -8,6 +8,8 @@ export function createGameLoop(
 	let accumulator = 0
 
 	const loop = (timestamp: number) => {
+		requestAnimationFrame(loop)
+
 		const dt = timestamp - last
 		last = timestamp
 		if (dt > 1e3) {
@@ -24,8 +26,6 @@ export function createGameLoop(
 		}
 
 		renderFunc?.()
-
-		requestAnimationFrame(loop)
 	}
 
 	return () => loop(last)
