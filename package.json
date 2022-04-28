@@ -19,6 +19,7 @@
   "dependencies": {
     "bitecs": "^0.3.38",
     "brandi": "^4.0.1",
+    "kontra": "^8.0.0",
     "matter-js": "^0.18.0",
     "mobx": "^6.5.0",
     "mobx-react-lite": "^3.3.0",

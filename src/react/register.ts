@@ -23,5 +23,10 @@ export function registerBindings(container: Container) {
 }
 
 export function registerInjections() {
-	injected(renderPipeline, Token.AssetsData, Token.IndexToTextureKey)
+	injected(
+		renderPipeline,
+		Token.AssetsData,
+		Token.GameConfig,
+		Token.IndexToTextureKey
+	)
 }

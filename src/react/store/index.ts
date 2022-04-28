@@ -7,14 +7,12 @@ class Sprite implements SpriteProps {
 	x: number
 	y: number
 	path: string
-	color?: number
 
 	constructor(data: SpriteProps) {
 		this.eid = data.eid
 		this.x = data.x
 		this.y = data.y
 		this.path = data.path
-		this.color = data.color
 
 		makeAutoObservable(this)
 	}

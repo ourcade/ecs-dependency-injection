@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import type { SpriteProps } from './types'
 import { stateStore } from './store'
 
-export function Sprite({ eid, color, path, x, y, opacity = 1 }: SpriteProps) {
+export function Sprite({ eid, path, x, y, opacity = 1 }: SpriteProps) {
 	const ref = useRef<HTMLDivElement>(null)
 
 	useEffect(() => {
@@ -31,7 +31,7 @@ export function Sprite({ eid, color, path, x, y, opacity = 1 }: SpriteProps) {
 				<img
 					src={path}
 					style={{
-						opacity: color ? 0.7 : opacity,
+						opacity: opacity,
 						marginBottom: '-4px',
 					}}
 				/>

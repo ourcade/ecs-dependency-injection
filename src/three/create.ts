@@ -8,7 +8,6 @@ import {
 	IGameConfig,
 } from '../types'
 import { Orbit } from './components'
-import { RenderLoopFunc } from './types'
 
 export function createRenderer(config: IGameConfig) {
 	const renderer = new THREE.WebGLRenderer()
@@ -55,15 +54,13 @@ export function createPerspectiveCamera() {
 export function createLoop(
 	world: IECSWorld,
 	gameUpdate: GameUpdateFunc,
-	renderPipeline: ECSPipeline,
-	renderLoop: RenderLoopFunc
+	renderPipeline: ECSPipeline
 ) {
 	return (dt: number) => {
 		world.dt = dt
 
 		gameUpdate(world)
 		renderPipeline(world)
-		renderLoop()
 	}
 }
 

@@ -1,7 +1,7 @@
 import { defineQuery, enterQuery, exitQuery, IWorld, pipe } from 'bitecs'
 
 import { Position, Sprite, Tint } from '../../game/components'
-import { IAssetsData, IndexToTextureFunc } from '../../types'
+import { IAssetsData, IGameConfig, IndexToTextureFunc } from '../../types'
 import { stateStore } from '../store'
 
 function createSprite(assets: IAssetsData, indexToTexture: IndexToTextureFunc) {
@@ -32,7 +32,10 @@ function createSprite(assets: IAssetsData, indexToTexture: IndexToTextureFunc) {
 	}
 }
 
-function positionSprite() {
+function positionSprite(
+	config: IGameConfig,
+	indexToTexture: IndexToTextureFunc
+) {
 	const query = defineQuery([Sprite, Position])
 
 	return (world: IWorld) => {
@@ -47,8 +50,12 @@ function positionSprite() {
 				continue
 			}
 
+			const texId = Sprite.texture[eid]
+			const key = indexToTexture(texId)
+			const conf = config[key]
+
 			ref.current.style.left = `${Position.x[eid]}px`
-			ref.current.style.top = `${Position.y[eid]}px`
+			ref.current.style.top = `${Position.y[eid] - conf.height * 0.5}px`
 		}
 
 		return world
@@ -84,11 +91,12 @@ function tintSprite() {
 
 export function renderPipeline(
 	assets: IAssetsData,
+	config: IGameConfig,
 	indexToTexture: IndexToTextureFunc
 ) {
 	return pipe(
 		createSprite(assets, indexToTexture),
 		tintSprite(),
-		positionSprite()
+		positionSprite(config, indexToTexture)
 	)
 }

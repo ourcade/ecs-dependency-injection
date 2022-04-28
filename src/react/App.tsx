@@ -6,6 +6,7 @@ import { ECSWorld, GameUpdate, StartGame } from '../tokens'
 import { stateStore } from './store'
 import { RenderPipeline } from './tokens'
 import { Sprite } from './Sprite'
+import { createGameLoop } from '../game/services'
 
 export const App = observer(function () {
 	const container = useContext(ContainerContext)
@@ -18,18 +19,14 @@ export const App = observer(function () {
 		const gameUpdate = container.get(GameUpdate)
 		const renderPipeline = container.get(RenderPipeline)
 
-		let start = performance.now()
-		const loop = (timestamp: number) => {
-			const dt = timestamp - start
+		const startLoop = createGameLoop((dt) => {
 			world.dt = dt
 			gameUpdate(world)
 			renderPipeline(world)
-
-			requestAnimationFrame(loop)
-		}
+		})
 
 		startGame()
-		loop(start)
+		startLoop()
 	}, [])
 
 	return (

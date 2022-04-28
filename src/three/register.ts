@@ -31,29 +31,23 @@ export function registerBindings(container: Container) {
 	container.bind(RenderPipeline).toInstance(renderPipeline).inTransientScope()
 	container.bind(Orbit).toInstance(addOrbitControls).inTransientScope()
 
-	const layout = [
-		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-		[0, 0, 1, 1, 1, 1, 1, 0, 3, 3, 3, 3, 3, 0, 0],
-		[0, 0, 0, 1, 1, 6, 6, 6, 6, 6, 3, 3, 0, 0, 0],
-		[0, 0, 0, 0, 1, 1, 6, 6, 6, 3, 3, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0, 1, 1, 6, 3, 3, 0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0, 0, 1, 6, 3, 0, 0, 0, 0, 0, 0],
-		[0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0],
-	]
-	container.bind(Token.BricksLayout).toConstant(layout)
+	// const layout = [
+	// 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+	// 	[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+	// 	[0, 0, 1, 1, 1, 1, 1, 0, 3, 3, 3, 3, 3, 0, 0],
+	// 	[0, 0, 0, 1, 1, 6, 6, 6, 6, 6, 3, 3, 0, 0, 0],
+	// 	[0, 0, 0, 0, 1, 1, 6, 6, 6, 3, 3, 0, 0, 0, 0],
+	// 	[0, 0, 0, 0, 0, 1, 1, 6, 3, 3, 0, 0, 0, 0, 0],
+	// 	[0, 0, 0, 0, 0, 0, 1, 6, 3, 0, 0, 0, 0, 0, 0],
+	// 	[0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0],
+	// ]
+	// container.bind(Token.BricksLayout).toConstant(layout)
 }
 
 export function registerInjections() {
 	injected(createRenderer, Token.GameConfig)
 	injected(createMainScene, Token.AssetsData)
-	injected(
-		createLoop,
-		Token.ECSWorld,
-		Token.GameUpdate,
-		RenderPipeline,
-		RenderLoop
-	)
+	injected(createLoop, Token.ECSWorld, Token.GameUpdate, RenderPipeline)
 	injected(createRenderLoop, MainScene, Camera, Renderer)
 	injected(
 		renderPipeline,
