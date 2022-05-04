@@ -10,12 +10,13 @@ The 4 frameworks that this is running on is:
 
 - Phaser 3
 - Pixi
+- Kontra
 - React
 - Three
 
 ## Getting Started
 
-This project uses Vite.js and has 4 entry points. The main one (index.html) is for Phaser 3 then each additional framework has its own HTML page.
+This project uses Vite.js and has 5 entry points. The main one (index.html) is for Phaser 3 then each additional framework has its own HTML page.
 
 Clone the repository and run:
 
