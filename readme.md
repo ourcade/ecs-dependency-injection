@@ -6,7 +6,7 @@ This is an example of using Dependency Injection and an Entity Component System 
 
 The game is a basic and barebones version of Arkanoid, Breakout, or Brick Breaker.
 
-The 4 frameworks that this is running on is:
+The 5 frameworks that this is running on is:
 
 - Phaser 3
 - Pixi
